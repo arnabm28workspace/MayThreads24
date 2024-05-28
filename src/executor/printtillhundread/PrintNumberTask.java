@@ -1,4 +1,4 @@
-package printonetohundread;
+package executor.printtillhundread;
 
 public class PrintNumberTask implements Runnable {
     public int var;
