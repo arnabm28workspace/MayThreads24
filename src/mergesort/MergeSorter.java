@@ -18,6 +18,7 @@ public class MergeSorter implements Callable<List<Integer>> {
 
     @Override
     public List<Integer> call() throws Exception {
+        System.out.println("New Thread: " + arrayToSort + " Name: " + Thread.currentThread().getName());
         // S1. breaking condition
         if (arrayToSort.size() <= 1) {
             return arrayToSort;
@@ -48,16 +49,10 @@ public class MergeSorter implements Callable<List<Integer>> {
         MergeSorter leftMergeSorter = new MergeSorter(leftArray, executorService); // [1,2,3]  --- 2
         MergeSorter rightMergeSorter = new MergeSorter(rightArray, executorService);
 
-        /**
-         * left: 1,2,3
-         *
-         *
-         */
-
 
         // calling the self func again...
-        List<Integer> leftSortedArray = leftMergeSorter.call();
-        List<Integer> rightSortedArray = rightMergeSorter.call();
+        Future<List<Integer>> leftSortedArrayFuture = executorService.submit(leftMergeSorter);
+        Future<List<Integer>> rightSortedArrayFuture = executorService.submit(rightMergeSorter);
 
         List<Integer> sortedArray = new ArrayList<>();
 
@@ -66,7 +61,11 @@ public class MergeSorter implements Callable<List<Integer>> {
 
         /**
          * Now we would need the arrays .... because we want to merge them.
+         *
+         * from here... will that be multi threaded... no it will be single threaded.
          */
+        List<Integer> leftSortedArray = leftSortedArrayFuture.get();
+        List<Integer> rightSortedArray = rightSortedArrayFuture.get();
 
         while (i < leftSortedArray.size() && j < rightSortedArray.size()) {
             if (leftSortedArray.get(i) < rightSortedArray.get(j)) {

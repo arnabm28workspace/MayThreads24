@@ -10,22 +10,11 @@ public class Client {
     public static void main(String[] args) throws Exception {
         List<Integer> list = List.of(7, 3, 4, 1, 9, 8, 2, 6);
         // S1. Create ExecutorService
-        ExecutorService executorService = Executors.newCachedThreadPool();
+        ExecutorService executorService = Executors.newFixedThreadPool(6);
         // it will try to reuse the existing threads if possible.
 
         // S2. Create Task for MergeSort
         MergeSorter mergeSorter = new MergeSorter(list, executorService);
-
-
-
-
-
-
-
-
-
-
-
 
 
         // S3. Passing the Task to ExecutorService
