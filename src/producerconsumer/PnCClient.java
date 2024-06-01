@@ -6,12 +6,14 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class PnCClient {
     public static void main(String[] args) {
-        Queue<Object> q = new LinkedList<>();
+        Queue<Object> q = new ConcurrentLinkedDeque<>(); // shirt store.
 
+        // multiple tasks for producer...
         ProducerTask p1 = new ProducerTask(q, 6, "p1");
         ProducerTask p2 = new ProducerTask(q, 6, "p2");
         ProducerTask p3 = new ProducerTask(q, 6, "p3");
 
+        // multiple tasks for consumer...
         ConsumerTask c1 = new ConsumerTask(q, 6, "c1");
         ConsumerTask c2 = new ConsumerTask(q, 6, "c2");
         ConsumerTask c3 = new ConsumerTask(q, 6, "c3");

@@ -16,6 +16,11 @@ public class ProducerTask implements Runnable {
     @Override
     public void run() {
 
+        /**
+         * X _ X _ X _
+         * maxSize = 6
+         *
+         */
         while(true){
             synchronized (q){
                 if(q.size() < maxSize){
